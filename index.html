@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2024 by anonymous (http://jsbin.com/mejirolofe/1/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
-<meta name="robots" content="noindex">
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I'm Your Passenger fucking Darling</title>
+    <title>I'm Your Passenger Darling</title>
     <style>
         body {
             margin: 0;
@@ -77,6 +68,18 @@ Released under the MIT license: http://jsbin.mit-license.org
             z-index: 10;
         }
 
+        .final-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://media.giphy.com/media/yHM7VGTAQV3tUMZjqf/giphy.gif') no-repeat center center;
+            background-size: cover;
+            display: none;
+            z-index: 30;
+        }
+
         .error-message {
             position: fixed;
             top: 0;
@@ -124,6 +127,7 @@ Released under the MIT license: http://jsbin.mit-license.org
         </div>
         <p>Extrayendo archivos...</p>
     </div>
+    <div class="final-gif"></div>
 
     <script>
         function triggerEffects() {
@@ -134,8 +138,13 @@ Released under the MIT license: http://jsbin.mit-license.org
                 let progressBar = document.querySelector('.progress-bar-inner');
                 let width = 0;
                 let interval = setInterval(() => {
-                    if (width >= 100) {
+                    if (width >= 1000) {
                         clearInterval(interval);
+                        document.querySelector('.error-message').style.display = 'none';
+                        document.querySelector('.final-gif').style.display = 'block';
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
                     } else {
                         width += 5;
                         progressBar.style.width = width + '%';
@@ -146,6 +155,7 @@ Released under the MIT license: http://jsbin.mit-license.org
     </script>
 </body>
 </html>
+
 
 
 
