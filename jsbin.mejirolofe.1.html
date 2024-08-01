@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2024 by anonymous (http://jsbin.com/mejirolofe/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Your Passenger fucking Darling</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://media.giphy.com/media/3o6gE0QSc6H9DyplqE/giphy.gif') no-repeat center center;
+            background-size: cover;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+        }
+
+        .fire-button {
+            position: relative;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #333;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .fire-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: url('https://media.giphy.com/media/3o6gE0QSc6H9DyplqE/giphy.gif') no-repeat center center;
+            background-size: cover;
+            transform: translateX(-50%) translateY(-100%);
+            animation: fire 1s infinite linear;
+        }
+
+        @keyframes fire {
+            0% {
+                transform: translateX(-50%) translateY(-100%);
+            }
+            100% {
+                transform: translateX(-50%) translateY(100%);
+            }
+        }
+
+        .scary-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://media.giphy.com/media/QE5Z3FfR6skeIVjxvy/giphy.gif') no-repeat center center;
+            background-size: cover;
+            display: none;
+            z-index: 10;
+        }
+
+        .error-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: red;
+            font-size: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: none;
+            z-index: 20;
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 30px;
+            background-color: grey;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background-color: red;
+            width: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Hello</h1>
+        <h4>Don't press this button</h4>
+        <button class="fire-button" onclick="triggerEffects()">Hi there</button>
+    </div>
+    <div class="scary-gif"></div>
+    <div class="error-message">
+        Error: Estamos borrando todos tus archivos...
+        <div class="progress-bar">
+            <div class="progress-bar-inner"></div>
+        </div>
+        <p>Extrayendo archivos...</p>
+    </div>
+
+    <script>
+        function triggerEffects() {
+            document.querySelector('.scary-gif').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.scary-gif').style.display = 'none';
+                document.querySelector('.error-message').style.display = 'flex';
+                let progressBar = document.querySelector('.progress-bar-inner');
+                let width = 0;
+                let interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                    } else {
+                        width += 5;
+                        progressBar.style.width = width + '%';
+                    }
+                }, 200);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
