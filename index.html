@@ -15,86 +15,48 @@
             height: 100vh;
             background: url('https://media.giphy.com/media/3o6gE0QSc6H9DyplqE/giphy.gif') no-repeat center center;
             background-size: cover;
+            font-family: Arial, sans-serif;
         }
 
         .content {
             text-align: center;
             color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .fire-button {
-            position: relative;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1.2em;
             color: white;
             background-color: #333;
             border: none;
             cursor: pointer;
-            overflow: hidden;
             margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
-        .fire-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            background: url('https://media.giphy.com/media/3o6gE0QSc6H9DyplqE/giphy.gif') no-repeat center center;
-            background-size: cover;
-            transform: translateX(-50%) translateY(-100%);
-            animation: fire 1s infinite linear;
+        .fire-button:hover {
+            background-color: #555;
         }
 
-        @keyframes fire {
-            0% {
-                transform: translateX(-50%) translateY(-100%);
-            }
-            100% {
-                transform: translateX(-50%) translateY(100%);
-            }
-        }
-
-        .scary-gif {
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://media.giphy.com/media/QE5Z3FfR6skeIVjxvy/giphy.gif') no-repeat center center;
-            background-size: cover;
             display: none;
-            z-index: 10;
-        }
-
-        .final-gif {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://media.giphy.com/media/yHM7VGTAQV3tUMZjqf/giphy.gif') no-repeat center center;
-            background-size: cover;
-            display: none;
-            z-index: 30;
-        }
-
-        .error-message {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            color: red;
-            font-size: 24px;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            display: none;
-            z-index: 20;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 2em;
+            z-index: 10;
+            flex-direction: column; 
         }
 
         .progress-bar {
@@ -102,14 +64,22 @@
             height: 30px;
             background-color: grey;
             margin-top: 20px;
-            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
         }
 
         .progress-bar-inner {
             height: 100%;
             background-color: red;
             width: 0;
-            position: absolute;
+            transition: width 0.2s;
+        }
+
+        .final-gif {
+            display: none;
+            margin-top: 20px;
+            width: 50%; 
+            max-width: 300px;
         }
     </style>
 </head>
@@ -119,43 +89,37 @@
         <h4>Don't press this button</h4>
         <button class="fire-button" onclick="triggerEffects()">Hi there</button>
     </div>
-    <div class="scary-gif"></div>
-    <div class="error-message">
-        Error: We are trying to extract all your files.. you really got in here....
+
+    <div class="overlay" id="overlay">
+        <div>Estamos extrayendo todos los archivos...</div>
         <div class="progress-bar">
-            <div class="progress-bar-inner"></div>
+            <div class="progress-bar-inner" id="progress"></div>
         </div>
-        <p>If you read this you lost your time...</p>
+        <img src="https://media.giphy.com/media/yHM7VGTAQV3tUMZjqf/giphy.gif" alt="GIF" class="final-gif" id="finalGif">
     </div>
-    <div class="final-gif"></div>
 
     <script>
         function triggerEffects() {
-            document.querySelector('.scary-gif').style.display = 'block';
-            setTimeout(() => {
-                document.querySelector('.scary-gif').style.display = 'none';
-                document.querySelector('.error-message').style.display = 'flex';
-                let progressBar = document.querySelector('.progress-bar-inner');
-                let width = 0;
-                let interval = setInterval(() => {
-                    if (width >= 100) {
-                        clearInterval(interval);
-                        document.querySelector('.error-message').style.display = 'none';
-                        document.querySelector('.final-gif').style.display = 'block';
-                        setTimeout(() => {
-                            location.reload();
-                        }, 3000);
-                    } else {
-                        width += 5;
-                        progressBar.style.width = width + '%';
-                    }
-                }, 200);
-            }, 2000);
+            const overlay = document.getElementById('overlay');
+            const progressBar = document.getElementById('progress');
+            const finalGif = document.getElementById('finalGif');
+            overlay.style.display = 'flex';
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        finalGif.style.display = 'block';
+                        overlay.innerHTML = '<div>Proceso completado</div>';
+                        overlay.appendChild(finalGif);
+                    }, 1000);
+                }
+            }, 500);
         }
     </script>
 </body>
 </html>
-
-
-
-
